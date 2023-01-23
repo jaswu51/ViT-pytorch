@@ -111,7 +111,7 @@ class ViT(nn.Module):
             nn.LayerNorm(dim),
             nn.Linear(dim, num_classes)
         )
-        self.softmax=nn.Softmax()
+        self.sig=nn.Sigmoid()
 
     def forward(self, x):
       
@@ -128,6 +128,6 @@ class ViT(nn.Module):
 
         x = self.to_latent(x)
         x = self.mlp_head(x)
-        print(x)
-        return self.softmax(x)
+
+        return self.sig(x)
 
