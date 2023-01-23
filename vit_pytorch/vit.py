@@ -98,9 +98,7 @@ class ViT(nn.Module):
         
 
         #input the list of 'num_patches' graphs from here torch.Size([1, num_patches, dim])
-        print(num_graphs)
         self.pos_embedding = nn.Parameter(torch.randn(1, num_graphs + 1, dim))
-        print(self.pos_embedding.shape)
         self.cls_token = nn.Parameter(torch.randn(1, 1, dim))
         self.dropout = nn.Dropout(emb_dropout)
 
@@ -113,7 +111,7 @@ class ViT(nn.Module):
             nn.LayerNorm(dim),
             nn.Linear(dim, num_classes)
         )
-        
+        self.softmax=nn.Softmax()
 
     def forward(self, x):
       
@@ -130,5 +128,6 @@ class ViT(nn.Module):
 
         x = self.to_latent(x)
         x = self.mlp_head(x)
-        return nn.Softmax(x)
+        print(x)
+        return self.softmax(x)
 
